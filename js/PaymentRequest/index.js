@@ -300,7 +300,7 @@ export default class PaymentRequest {
     // On iOS, this event fires when the PKPaymentRequest is initialized.
     // So on iOS, we track the amount of times `_handleShippingAddressChange` gets called
     // and noop the first call.
-    if (IS_IOS && this._shippingAddressChangesCount > 0) {
+    if (IS_IOS && !this._disableInitialUpdate) {
       return event.updateWith(this._details);
     }
 
