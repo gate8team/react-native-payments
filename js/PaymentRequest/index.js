@@ -264,6 +264,9 @@ export default class PaymentRequest {
   }
 
   _handleShippingAddressChange(postalAddress: PaymentAddress) {
+    // TODO: we will subscribe to native event manually
+    return null;
+
     this._shippingAddress = postalAddress;
 
     const event = new PaymentRequestUpdateEvent(
@@ -289,6 +292,9 @@ export default class PaymentRequest {
   }
 
   _handleShippingOptionChange({ selectedShippingOptionId }: Object) {
+    // TODO: we will subscribe to native event manually
+    return null;
+
     // Update the `shippingOption`
     this._shippingOption = selectedShippingOptionId;
 
@@ -515,6 +521,24 @@ export default class PaymentRequest {
         return resolve(undefined);
       });
     });
+  }
+
+  updateShippingOption(option: string, details: Function) {
+    this._shippingOption = option;
+    const event = new PaymentRequestUpdateEvent(
+      SHIPPING_OPTION_CHANGE_EVENT,
+      this
+    );
+    event.updateWith(details);
+  }
+
+  updateShippingAddress(address: PaymentAddress, details: Function) {
+    this._shippingAddress = address;
+    const event = new PaymentRequestUpdateEvent(
+      SHIPPING_ADDRESS_CHANGE_EVENT,
+      this
+    );
+    event.updateWith(details);
   }
 
   static canMakePaymentsUsingNetworks =
